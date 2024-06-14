@@ -23,9 +23,7 @@ image::standard_data_science.png[]
 
 image::deployment_size.png[]
 
-* Optionally, if there are GPUs available in your environment, you would be able to choose how many would be allocated to you (*0* in our case, we won't need any):
-
-image::gpu.png[]
+* Optionally, if there are NVIDIAGPUs available in your environment, you would be able to choose how many accelerator would be allocated to you.
 
 * Finally, you could set environment variables that would be injected in your environment at spawn time. They will be created as ConfigMap, or Secrets if you check the box, which will make it easier to modify programmatically or manually later on:
 
