@@ -5,7 +5,7 @@
 
 私たちが学んだことの簡単な要約は次のとおりです。
 
-- **Red Hat OpenShift AI** の使用方法。詳細については、https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai[こちら]をご覧ください。
+- **Red Hat OpenShift AI** の使用方法。詳細については、 https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai[こちら]をご覧ください。
 - モデルをトレーニングして OpenShift AI に簡単にデプロイする方法。 https://developers.redhat.com/products/red-hat-openshift-data-science/getting-started[ラーニング パス^] には、他にも多くの例とチュートリアルがあります。
 - 機械学習モデルを使用して機能を強化できるインテリジェントなアプリケーションを作成する方法。
 

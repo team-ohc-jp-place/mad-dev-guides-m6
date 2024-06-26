@@ -122,4 +122,4 @@ Jupyter 環境では、左側のファイル エクスプローラーに `01_san
 
 image::launch_notebook_icon.png[]
 
-ノートブックについて詳しく知りたい場合は、https://jupyter.org/[このページ^] にアクセスしてください。
+ノートブックについて詳しく知りたい場合は、 https://jupyter.org/[このページ^] にアクセスしてください。

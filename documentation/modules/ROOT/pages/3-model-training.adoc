@@ -13,7 +13,7 @@ image::close_sandbox.png[]
 
 image::stop_notebook_server.png[]
 
-* OpenShift AI ダッシュボードを閉じた場合は、https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。
+* OpenShift AI ダッシュボードを閉じた場合は、 https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。
 
 image::hub_panel.png[]
 
