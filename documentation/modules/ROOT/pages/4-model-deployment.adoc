@@ -3,9 +3,9 @@
 
 モデルのトレーニング方法とその使用方法の概要を説明した後、OpenShift AI を使用してモデルを提供する方法を見ていきます。これにより、後でインテリジェント アプリケーションで使用しやすくなります。
 
-OpenShift AI は、https://docs.openvino.ai/latest/ovms_what_is_openvino_model_server.html[Intel の OpenVino Model Server^] ランタイムを統合します。これは、Intel アーキテクチャでのデプロイメント用に最適化された、モデルを提供するための高性能システムです。
+OpenShift AI は、 https://docs.openvino.ai/latest/ovms_what_is_openvino_model_server.html[Intel の OpenVino Model Server^] ランタイムを統合します。これは、Intel アーキテクチャでのデプロイメント用に最適化された、モデルを提供するための高性能システムです。
 
-私たちが使用するモデルは、写真内の **T シャツ** 、 **ボトル** 、 **帽子** を分離して認識できる **オブジェクト検出モデル** です。このプロセスは前のセクションで見たものと全体的に同じですが、このモデルは GPU の助けを借りて数時間かかるため、すでにトレーニングされています。このトレーニング プロセスについて詳しく知りたい場合は、https://github.com/rh-aiservices-bu/yolov5-transfer-learning[こちら^]をご覧ください。
+私たちが使用するモデルは、写真内の **T シャツ** 、 **ボトル** 、 **帽子** を分離して認識できる **オブジェクト検出モデル** です。このプロセスは前のセクションで見たものと全体的に同じですが、このモデルは GPU の助けを借りて数時間かかるため、すでにトレーニングされています。このトレーニング プロセスについて詳しく知りたい場合は、 https://github.com/rh-aiservices-bu/yolov5-transfer-learning[こちら^]をご覧ください。
 
 結果のモデルは、機械学習の相互運用性のオープン標準である https://onnx.ai/[ONNX^] 形式で保存されており、OpenVino および OpenShift AI モデルの提供で使用できます。モデルは保存されており、AWS S3 バケットにダウンロードできます。
 
@@ -22,7 +22,8 @@ OpenShift AI は、https://docs.openvino.ai/latest/ovms_what_is_openvino_model_s
 Is_34AxyLht603Lh4z6UYztla79lQ3oz_os7U99JsKQ=
 ----
 
-これをコピーしてください。ノートブックの最初のセルにある `replace_me` プレースホルダーを置き換えるのに数秒で必要になります。
+これをコピーしてください。ノートブックの最初のセルにある `replace_me` プレースホルダーを置き換えるのにすぐに必要になります。
+
 IMPORTANT: キーをコピーするときは、行末の「=」記号を選択することを忘れないでください。
 
 (心配しないでください。アクセスしようとしているバケットは読み取り専用であり、それらのアクセス/シークレットはパブリック モデル ファイルを読み取るためにのみ使用できます。したがって、復号化された資格情報であっても機密性はまったくありません。)
@@ -39,7 +40,7 @@ image::check_model-complete.png[]
 
 モデルを S3 ストレージで利用できるため、提供するのは非常に簡単です。
 
-* OpenShift AI ダッシュボードに戻ります。閉じた場合は、https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。 
+* OpenShift AI ダッシュボードに戻ります。閉じた場合は、 https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。 
 
 image::hub_panel.png[]
 

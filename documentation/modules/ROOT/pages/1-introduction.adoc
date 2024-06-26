@@ -11,7 +11,7 @@ https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai[Re
 
 OpenShift AI はすでにワークショップ環境に導入されています。
 
-開始するには、https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[OpenShift AI web console^] にアクセスしてください 
+開始するには、 https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[OpenShift AI web console^] にアクセスしてください 
 
 * これまで OpenShift クラスターにログインしたことがない場合は、次の認証情報を使用します。 OpenShift はすでに https://access.redhat.com/products/red-hat-single-sign-on/[Red Hat Single Sign On^]  と統合されています。
 
