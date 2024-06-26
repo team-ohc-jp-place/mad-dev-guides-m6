@@ -76,7 +76,8 @@ image::deployment-complete.png[]
 
 == 5.3. アプリケーションの使用
 
-このアプリケーションは比較的簡単に使用できます。作成した `ia-frontend` の RouteのURL をクリックします。この URL は次のようになります: https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/[https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/ ^]
+このアプリケーションは比較的簡単に使用できます。作成した `ia-frontend` の RouteのURL をクリックします。この URL は次のようになります。
+https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/[https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/ ^]
 
 まずカメラの使用を許可する必要があります。次のインターフェイスが表示されます。
 

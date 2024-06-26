@@ -90,7 +90,8 @@ image::deployed_models.png[]
 
 image::model_ready.png[]
 
-* 準備ができたら、 **Inference endpoint** 列の下にある `Internal Service` リンクを選択し、grpcURL 値をメモします。後で必要になります。これは`grpc://modelmesh-serving.%USERID%-data-science-project:8033` になっているはずです。
+* 準備ができたら、 **Inference endpoint** 列の下にある `Internal Service` リンクを選択し、grpcURL 値をメモします。後で必要になります。 次のようになっているはずです。
+`grpc://modelmesh-serving.%USERID%-data-science-project:8033`
 
 image::grpcurl.png[]
 
