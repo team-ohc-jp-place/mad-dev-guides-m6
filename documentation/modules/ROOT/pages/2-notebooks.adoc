@@ -1,49 +1,49 @@
 = 2. Working with notebooks - 10 minutes
 :imagesdir: ../assets/images
 
-== 2.1 Launching a notebook environment
+== 2.1 ノートブック環境の起動
 
-If this is a new thing for you, a notebook is an environment where you can easily run code in an interactive manner. Simply saying that gives you a hint of why it has been heavily adopted by scientists in general, especially data scientists. Experiments are usually done in this interactive trial and error manner, and you will shortly see why this is the perfect environment to do that.
+これが初めての方にとって、ノートブックは対話型でコードを簡単に実行できる環境です。これを言うだけで、科学者全般、特にデータ サイエンティストに広く採用されている理由がわかります。実験は通常、このインタラクティブな試行錯誤の方法で行われますが、これを行うのに最適な環境である理由がすぐにわかります。
 
-Jupyter is a leading open source notebook solution developed at UC Berkeley, that we have implemented in OpenShift AI.
+Jupyter は、カリフォルニア大学バークレー校で開発された主要なオープンソース ノートブック ソリューションであり、OpenShift AI に実装されています。
 
-Launching a Jupyter notebook environment in OpenShift AI is pretty easy:
+OpenShift AI で Jupyter ノートブック環境を起動するのは非常に簡単です。
 
-* From the **Applications->Enabled** menu, select **Launch application** from the **Jupyter** tile:
+* **Applications->Enabled** メニューから、**Jupyter** タイルの **Launch application** を選択します。
 
 image::launch_jupyter.png[]
 
-This will lead you to a page with different options that you have to select to start the environment.
+これにより、環境を開始するために選択する必要があるさまざまなオプションを含むページが表示されます。
 
-* The type of **Notebook image** you will use. They each come with a specific set of tools, libraries or packages depending on the "flavour" you are choosing. For this introduction, select "Standard Data Science", which brings you a set of data science packages commonly used:
+* 使用する **Notebook image** のタイプ。それぞれには、選択した「フレーバー」に応じて、特定のツール、ライブラリ、またはパッケージのセットが付属しています。この概要では、"Standard Data Science" を選択します。これにより、一般的に使用されるデータ サイエンス パッケージのセットが提供されます。
 
 image::standard_data_science.png[]
 
-* The second choice you have to make is the **Deployment size** of your environment. Basically this is the resources (CPU, RAM) that will be allocated to the pod where your code will be running. It's a set of "T-Shirt" sizes to choose from. We will use a "Small" environment for this introduction:
+* 2 番目に選択する必要があるのは、環境の **Deployment size** です。基本的に、これはコードが実行されるポッドに割り当てられるリソース (CPU、RAM) です。サイズが選べる「Tシャツ」のセットです。この Introduction では "Small" 環境を使用します。
 
 image::deployment_size.png[]
 
-* Optionally, if there are GPUs available in your environment, you would be able to choose how many would be allocated to you (*0* in our case, we won't need any):
+* 必要に応じて、環境内で利用可能な GPU がある場合、割り当てられる GPU の数を選択できます (この場合は *0* なので、何も必要ありません)。
 
 image::gpu.png[]
 
-* Finally, you could set environment variables that would be injected in your environment at spawn time. They will be created as ConfigMap, or Secrets if you check the box, which will make it easier to modify programmatically or manually later on:
+* 最後に、生成時に環境に挿入される環境変数を設定できます。これらはチェックボックスをオンにすると ConfigMap として作成されるか、Secret として作成されます。これにより、後でプログラムまたは手動で簡単に変更できます。
 
 image::variables.png[]
 
-* You can then select **Start Server**:
+* 次に、 **Start Server** を選択します。
 
 image::start_server.png[]
 
-* While the environment is starting you will get some information:
+* 環境の起動中に、いくつかの情報が得られます。
 
 image::start.png[]
 
-* And when it's ready you can select **Open in new tab** to get access to your environment:
+* 準備ができたら、 **Open in new tab** を選択して環境にアクセスできます。
 
 image::open_new_tab.png[]
 
-* You will have to login again, and the first time you access the environment authorize the access to different information.
+* 再度ログインする必要があり、初めて環境にアクセスするときに、さまざまな情報へのアクセスを承認します。
 
  * *Username*: `%USERID%`
  * *Password*: `{openshift-password}`
@@ -54,72 +54,72 @@ image::authorize.png[]
 
 image::jupyterlab.png[]
 
-== 2.2. Working with JupyterLab
+== 2.2. JupyterLab の使用
 
-*JupyterLab* is an IDE that will let you primarily work with **notebooks**. As you can see, it's a web-based environment, but everything you will do here is in fact happening on the Red Hat OpenShift AI, in the Pod for which you selected the image and the size.
+*JupyterLab* は、主に **ノートブック** を操作できる IDE です。ご覧のとおり、これは Web ベースの環境ですが、ここで行うことはすべて、実際にはイメージとサイズを選択した Pod 内の Red Hat OpenShift AI 上で行われます。
 
-This means that without having to install and maintain anything on your own computer, and without disposing of lots of local resources like CPU and RAM, you can conduct your Data Science work in this powerful and stable managed environment.
+つまり、自分のコンピューターに何もインストールして保守する必要がなく、CPU や RAM などの多くのローカル リソースを破棄することなく、この強力で安定した管理された環境でデータ サイエンス作業を行うことができます。
 
-On the left side, in the *file-browser-like* panel, you will find the files and folders that are saved inside your own personal space inside Red Hat OpenShift AI. It is pretty empty right now though. So the first thing we will do is to bring the content of the workshop inside this environment.
+左側の *ファイルブラウザのような* パネルには、Red Hat OpenShift AI 内の個人用スペース内に保存されているファイルとフォルダーが表示されます。今はかなり空いてますけどね。そこで最初にやることは、ワークショップの内容をこの環境内に取り込むことです。
 
-* On the left toolbar, select the Git icon:
+* 左側のツールバーで、Git アイコンを選択します。
 
 image::git.png[]
 
-* Then select `Clone a Repository`:
+* 次に、 `Clone a Repository` を選択します。
 
 image::git_clone.png[]
 
-* Enter this URL, https://github.com/rh-aiservices-bu/mad_m6_workshop.git, then select `CLONE`:
+* URL https://github.com/team-ohc-jp-place/mad_m6_workshop.git を入力し、 `Clone` を選択します。
 
 image::clone_repo.png[]
 
-* It takes a few seconds, after which you can double-click and navigate to the newly-created folder, **mad_m6_workshop**:
+* この操作は数秒かかります。その後、ダブルクリックして、新しく作成したフォルダー **mad_m6_workshop** に移動できます。
 
 image::open_mad_workshop.png[]
 
-We are now ready to use notebooks!
+これでノートブックを使用する準備が整いました！
 
-== 2.3. Working with notebooks
+== 2.3. ノートブックの操作
 
-This section provides a small introduction on how to use Jupyter Notebooks. If you are already at ease with Jupyter, you can directly head to the link:3-model-training.html[next section].
+このセクションでは、Jupyter Notebook の使用方法について簡単に紹介します。すでに Jupyter に慣れている場合は、link:3-model-training.html[次のセクション] に直接移動できます。
 
-=== 2.3.1. What's a notebook?
+=== 2.3.1. ノートブックとは？
 
-* A notebook is an environment where you have cells that can display formatted text, or code.
+* ノートブックは、書式設定されたテキストまたはコードを表示できるセルがある環境です。
 
-This is an empty cell:
+これは空のセルです。
 
 image::empty_cell.png[]
 
-And a cell where we have entered some code:
+そして、コードを入力したセルです。
 
 image::cell_with_code.png[]
 
-* Code cells contain Python code that can be run interactively. It means that you can modify the code, then run it, but only for this cell, not for the whole content of the notebook! The code will not run on your computer or in the browser, but directly in the environment you are connected to, Red Hat OpenShift AI.
+* コード セルには、対話的に実行できる Python コードが含まれています。これは、コードを変更して実行できることを意味しますが、それはこのセルに対してのみであり、ノートブックのコンテンツ全体に対しては実行できないということです。コードはコンピューターやブラウザーでは実行されず、接続している環境である Red Hat OpenShift AI で直接実行されます。
 
-* To run a code cell, you simply select it (select the cell, or on the left side of it), and select the Run/Play button from the toolbar (you can also press CTRL+Enter to run a cell, or Shift+Enter to run the cell and automatically select the following one).
+* コード セルを実行するには、セルを選択し (セルまたはその左側を選択)、ツールバーから Run/Play ボタンを選択します (CTRL+Enter を押してセルを実行するか、Shift+ Enter を押すとセルが実行され、次のセルが自動的に選択されます)。
 
-The Run button on the toolbar:
+ツールバーの Run ボタン:
 
 image::run_cell.png[]
 
-As you will see, you then get the result of the code that was run in that cell (if the code produces some output), as well as information on when this particular cell has been run.
+ご覧のとおり、そのセルで実行されたコードの結果 (コードが何らかの出力を生成する場合) と、この特定のセルがいつ実行されたかに関する情報が取得されます。
 
-* When you save a notebook, the code as well as all the results are saved! So you can always reopen it to look at the results without having to run all the program again, while still having access to the code that produced this content.
+* ノートブックを保存すると、コードとすべての結果が保存されます。したがって、すべてのプログラムを再度実行する必要がなく、このコンテンツを生成したコードに引き続きアクセスしながら、いつでも再度開いて結果を確認できます。
 
-Notebooks are so named because they are just like a physical Notebook. It is exactly like if you were taking notes about your experiments (which you will do), along with the code itself, including any parameters you set. You see the output of the experiment inline (this is the result from a cell once it is run), along with all the notes you want to take (to do that, you can switch the cell type from the menu from `Code` to `Markup`).
+ノートブックは物理的なノートに似ているため、このように名付けられました。これは、設定したパラメーターを含むコード自体とともに、(これから行う) 実験についてメモを取っているのとまったく同じです。実験の出力がインラインで表示されます (これは、実行後のセルの結果です)。また、実験の出力（セルが実行された後の結果）が、必要なすべてのノートとともにインラインで表示されます。メニューからセルの種類を `Code` から `Markup`　に切り替えることができます。
 
-=== 2.3.2. Time to experiment!
+=== 2.3.2. 実験してみましょう！
 
-Now that we have covered the basics, just give it a try!
+基本を説明したので、ぜひ試してみてください。
 
-In your Jupyter environment, in file explorer on the left side, there is file called `01_sanbdbox.ipynb`. Double-click it to launch the notebook (it will open another tab in the content section of the environment, on the right). Please feel free to experiment, run the different cells, add some more code... You can do what you want - it is your environment, and there is no risk of breaking anything or impacting other users. This environment isolation is also a great advantage brought by Red Hat OpenShift AI.
+Jupyter 環境では、左側のファイル エクスプローラーに `01_sanbdbox.ipynb` というファイルがあります。これをダブルクリックしてノートブックを起動します (環境の右側のコンテンツ セクションに別のタブが開きます)。自由に実験したり、さまざまなセルを実行したり、コードを追加したりしてください...やりたいことを自由に実行できます。これはあなたの環境であり、何かを壊したり他のユーザーに影響を与えたりするリスクはありません。この環境の分離は、Red Hat OpenShift AI によってもたらされる大きな利点でもあります。
 
-You can also create a new notebook by selecting `File->New->Notebook` from the menu on the top left, then select a Python 3 kernel. This instructs Jupyter that we want to create a new notebook where the code cells will be run using a Python 3 kernel. We could have different kernels, with different languages or versions that we can run into notebooks, but that is a story for another time.
+左上のメニューから `File->New->Notebook` を選択し、Python 3 カーネルを選択して、新しいノートブックを作成することもできます。これにより、Python 3 カーネルを使用してコード セルが実行される新しいノートブックを作成するよう Jupyter に指示されます。ノートブックで実行できるさまざまな言語やバージョンのさまざまなカーネルを使用することもできますが、それについてはまた別の機会にお話しします。
 
-You can also create a notebook by simply selecting the icon in the launcher:
+ランチャーでアイコンを選択するだけでノートブックを作成することもできます。
 
 image::launch_notebook_icon.png[]
 
-If you want to learn more about notebooks, head to https://jupyter.org/[this page^].
+ノートブックについて詳しく知りたい場合は、https://jupyter.org/[このページ^] にアクセスしてください。

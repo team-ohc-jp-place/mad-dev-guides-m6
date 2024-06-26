@@ -1,47 +1,47 @@
 = 3. Training a model - 15 minutes
 :imagesdir: ../assets/images
 
-In this section, we will explore how data scientists are training models. It will be a very simple example, but it will give you the basics on the workflow.
+このセクションでは、データ サイエンティストがモデルをどのようにトレーニングしているかを見ていきます。これは非常に単純な例ですが、ワークフローの基本を説明します。
 
-* If you still have your sandbox notebook opened, please first close it:
+* サンドボックス ノートブックを開いたままの場合は、まず閉じてください。
 
 image::close_sandbox.png[]
 
-We also need to shut down the Jupyter notebook environment and pod, as for the rest of the workshop we will use a Data Science Project.
+ワークショップの残りの部分ではデータ サイエンス プロジェクトを使用するため、Jupyter ノートブック環境とポッドもシャットダウンする必要があります。
 
-* If you still have you OpenShift AI dashboard tab opened in your browser, head to it. You can then simply close the JupyterLab tab, and select **Stop notebook server** on the dashboard:
+* ブラウザーで OpenShift AI ダッシュボード タブを開いている場合は、そこにアクセスしてください。その後、単純に JupyterLab タブを閉じ、ダッシュボードで **Stop notebook server** を選択します。
 
 image::stop_notebook_server.png[]
 
-* If you had closed the OpenShift AI dashboard, you can access it https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[here^] or you can reopen it from Jupyter by clicking on **File->Hub Control Panel**:
+* OpenShift AI ダッシュボードを閉じた場合は、https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。
 
 image::hub_panel.png[]
 
-It will reopen a tab with the dashboard, from which you can stop the notebook environment as described before. We are now ready to work in a Data Science Project.
+ダッシュボードのタブが再度開きます。ここから、前述のようにノートブック環境を停止できます。これで、データ サイエンス プロジェクトに取り組む準備が整いました。
 
-== 3.1. Data Science Project
+== 3.1. データサイエンスプロジェクト
 
-First, we will need a data science project to organize all our work: model training, model serving, application deployment. As we said earlier, a data science project is in fact an OpenShift project, but you don't need to leave the OpenShift AI environment to create it!
+まず、モデルのトレーニング、モデルの提供、アプリケーションのデプロイメントなど、すべての作業を整理するデータ サイエンス プロジェクトが必要です。前に述べたように、データ サイエンス プロジェクトは実際には OpenShift プロジェクトですが、作成するために OpenShift AI 環境を離れる必要はありません。
 
-=== 3.1.1. Creating the DSP
+=== 3.1.1. DSP の作成
 
-* Head to **Data Science Projects** and select **Create data science project**:
+*  **Data Science Projects** に移動し、 **Create data science project** を選択します。
 
 image::create_dsp.png[]
 
-* Type the following values in the popup window. It will be the Display name for OpenShift, and the Resource name is automatically sanitized and created for you.
+* ポップアップ ウィンドウに次の値を入力します。これは OpenShift の表示名となり、リソース名は自動的にサニタイズされて作成されます。
 
 * *Name*: `%USERID% data science project`
 * *Resource name*: `%USERID%-data-science-project`
-* *Description*: `This is my first try at data science!`
+* *Description*: `データサイエンスに初めて挑戦してみます！`
 
 image::create_dsp_modal.png[]
 
-Now, if you are curious and have a look at the *OpenShift console*:
+ここで、興味があれば *OpenShift コンソール* を見てみましょう。
 
-* Access from your web browser your https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project[Data Science Project^]
+* Web ブラウザから https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project[Data Science Project^] にアクセスします。
 
-* Use the following credentials if you haven't logged in to the OpenShift cluster before. OpenShift is already integrated with https://access.redhat.com/products/red-hat-single-sign-on/[Red Hat Single Sign On^].
+* これまで OpenShift クラスターにログインしたことがない場合は、次の認証情報を使用します。 OpenShift はすでに https://access.redhat.com/products/red-hat-single-sign-on/[Red Hat Single Sign On^] と統合されています。
 
 image::sso_login.png[openshift_login]
 
@@ -50,70 +50,70 @@ image::sso_login.png[openshift_login]
 ** Username: `%USERID%`
 ** Password: `{openshift-password}`
 
-* You will see that the project has indeed been created.
+* プロジェクトが実際に作成されたことがわかります。
 
 image::my_dsp_console.png[]
 
-=== 3.1.2. Working with the DSP
+=== 3.1.2. DSP の使用
 
-In a Data Science Project you have different sections:
+データ サイエンス プロジェクトには、さまざまなセクションがあります。
 
-* Workbenches are development environments. They can be based on JupyterLab, but also on other types of IDEs, like VS Code or RStudio. You can create as many workbenches as you want, and they can run concurrently.
-* Cluster storage are Persistent Volumes Claims (PVCs), the persistent storage spaces you can use to store your notebooks and data. You can create them directly from here, and mount them in your workbenches as you like. Note that a default cluster storage (PVC) is always automatically created with a new workbench to save your work.
-* Data connections are configurations for remote data location. At the moment, only S3-compatible Object Storage is supported. We will use this feature later on to configure the storage for our models.
-* Finally, Model Servers are used to serve models! But let's save that for later.
+* ワークベンチは開発環境です。これらは JupyterLab をベースにすることもできますが、VS Code や RStudio などの他のタイプの IDE をベースにすることもできます。ワークベンチは必要なだけ作成でき、同時に実行できます。
+* クラスター ストレージは永続ボリューム クレーム (PVC) であり、ノートブックやデータの保存に使用できる永続ストレージ スペースです。ここから直接作成し、必要に応じてワークベンチにマウントできます。作業内容を保存するために、デフォルトのクラスターストレージ (PVC) が新しいワークベンチで常に自動的に作成されることに注意してください。
+* データ接続は、リモート データのための構成です。現時点では、S3 互換のオブジェクト ストレージのみがサポートされています。後でこの機能を使用して、モデルのストレージを構成します。
+* 最後に、モデルサーバーはモデルを提供するために使用されます。しかし、それは後で取っておきましょう。
 
-For now, let's create a new workbench to work with Tensorflow to train models!
+ここでは、Tensorflow と連携してモデルをトレーニングするための新しいワークベンチを作成しましょう。
 
-* select **Create workbench**
+* **Create workbench** を選択します。
 
 image::create_workbench.png[]
 
-* Give it a name, select the **Tensorflow** image with the version **2023.1**, a Deployment size of **Small**, and a Cluster storage space of **1GB**, it will be enough:
+* 名前を付け **Tensorflow** イメージ、バージョン **2023.1** 、デプロイ サイズ **Small** 、クラスター ストレージ スペース **1GB** を選択します。これで十分です。
 
 image::create_workbench_1.png[]
 image::create_workbench_2.png[]
 
-* And of course, select **Create workbench**:
+* そしてもちろん、 **Create workbench** を選択します。
 
 image::create_workbench_click.png[]
 
-* The workbench is created, first in the **Starting state**:
+* ワークベンチが作成され、最初は **Starting state** です。
 
 image::workbench_starting.png[]
 
-You can use this toggle to easily start/stop this environment later on.
+このトグルを使用すると、後でこの環境を簡単に開始/停止できます。
 
-* When it is ready, the state will change to **Running** and you can select **Open** to go to your environment:
+* 準備が完了すると、状態が **Running** に変わり、 **Open** を選択して環境に移動できます。
 
 image::workbench_running.png[]
 
-* After authentication and allowing permissions, you are again in your now familiar JupyterLab environment:
+* 認証して権限を許可すると、使い慣れた JupyterLab 環境に戻ります。
 
 image::workbench_jl.png[]
 
-== 3.2. Model training
+== 3.2. モデルのトレーニング
 
-We are now ready to do some serious work!
+本格的な作業を行う準備が整いました。
 
-* Again, go to the Git menu on the left:
+* もう一度、左側の Git メニューに移動します。
 
 image::git.png[]
 
-* Then select `Clone a Repository`:
+* 次に `Clone a Repository` を選択します。
 
 image::git_clone.png[]
 
-* Enter the URL https://github.com/rh-aiservices-bu/mad_m6_workshop.git, then select `CLONE`:
+* URL https://github.com/team-ohc-jp-place/mad_m6_workshop を入力し、,  `Clone` を選択します。
 
 image::clone_repo.png[]
 
-* It takes a few seconds, after which you can double-click and navigate to the newly-created folder, **mad_m6_workshop**:
+* この操作は数秒かかります。その後、ダブルクリックして、新しく作成したフォルダー **mad_m6_workshop** に移動できます。
 
 image::open_mad_workshop.png[]
 
-* In the `mad_m6_workshop` folder, open the file `02_model_training_basics`.
+*  `mad_m6_workshop` フォルダーで、 `02_model_training_basics` ファイルを開きます。
 
-* Follow the steps in the notebook, and run each cell as you go. There may be an Error message when running the cell where `pip install` are done, but you can safely ignore it.
+* ノートブックの手順に従い、各セルを実行します。 `pip install` が実行されるセルを実行すると、エラー メッセージが表示される場合がありますが、無視しても問題ありません。
 
 image::run_cell.png[]

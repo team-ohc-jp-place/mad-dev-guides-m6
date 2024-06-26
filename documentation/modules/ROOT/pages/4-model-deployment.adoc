@@ -1,106 +1,106 @@
 = 4. Deploying a model - 15 minutes
 :imagesdir: ../assets/images
 
-After this overview of how a model is trained and how to use it, we're going to see how you can use OpenShift AI to serve it, which will make it easier to use later on in our intelligent application.
+モデルのトレーニング方法とその使用方法の概要を説明した後、OpenShift AI を使用してモデルを提供する方法を見ていきます。これにより、後でインテリジェント アプリケーションで使用しやすくなります。
 
-OpenShift AI integrates the https://docs.openvino.ai/latest/ovms_what_is_openvino_model_server.html[Intel's OpenVino Model Server^] runtime, a high-performance system for serving models, optimized for deployment on Intel architectures.
+OpenShift AI は、https://docs.openvino.ai/latest/ovms_what_is_openvino_model_server.html[Intel の OpenVino Model Server^] ランタイムを統合します。これは、Intel アーキテクチャでのデプロイメント用に最適化された、モデルを提供するための高性能システムです。
 
-The model we are going to use is an **object detection model** that is able to isolate and recognize **T-shirts**, **bottles**, and **hats** in pictures. Although the process is globally the same one as what we have seen in the previous section, this model has already been trained as it takes a few hours with the help of a GPU to do it. If you want to know more about this training process, you can have a look https://github.com/rh-aiservices-bu/yolov5-transfer-learning[here^].
+私たちが使用するモデルは、写真内の **T シャツ** 、 **ボトル** 、 **帽子** を分離して認識できる **オブジェクト検出モデル** です。このプロセスは前のセクションで見たものと全体的に同じですが、このモデルは GPU の助けを借りて数時間かかるため、すでにトレーニングされています。このトレーニング プロセスについて詳しく知りたい場合は、https://github.com/rh-aiservices-bu/yolov5-transfer-learning[こちら^]をご覧ください。
 
-The resulting model has been saved in the https://onnx.ai/[ONNX^] format, an open standard for machine learning interoperability, which is one we can use with OpenVino and OpenShift AI model serving. The model has been stored and is available for download in an AWS S3 bucket.
+結果のモデルは、機械学習の相互運用性のオープン標準である https://onnx.ai/[ONNX^] 形式で保存されており、OpenVino および OpenShift AI モデルの提供で使用できます。モデルは保存されており、AWS S3 バケットにダウンロードできます。
 
-Let's serve this model!
+このモデルを提供しましょう!
 
-== 4.1. Check the model
+== 4.1. モデルの確認
 
-There are many ways and different tools available to interact with Object Storage. Here we are going to use the Python library named `boto3`.
+オブジェクト・ストレージと対話するために利用できるさまざまな方法やツールがあります。ここでは `boto3` という名前の Python ライブラリを使用します。
 
-* In the notebook we are going to use, you will need to enter a key to decrypt the credentials to access the model location. This key is:
+* 使用するノートブックでは、モデルの保管場所にアクセスするための資格情報を復号化するためのキーを入力する必要があります。このキーは次のとおりです。
 
 [source,text]
 ----
 Is_34AxyLht603Lh4z6UYztla79lQ3oz_os7U99JsKQ=
 ----
 
-Please copy it, you will need it in a few seconds to replace the `replace_me` placeholder in the first cell of the notebook.
+これをコピーしてください。ノートブックの最初のセルにある `replace_me` プレースホルダーを置き換えるのに数秒で必要になります。
+IMPORTANT: キーをコピーするときは、行末の「=」記号を選択することを忘れないでください。
 
-IMPORTANT: When you copy the key, don't forget to select the "=" sign at the end of the line.
+(心配しないでください。アクセスしようとしているバケットは読み取り専用であり、それらのアクセス/シークレットはパブリック モデル ファイルを読み取るためにのみ使用できます。したがって、復号化された資格情報であっても機密性はまったくありません。)
 
-(Don't worry, the bucket we are going to access is readonly, and those access/secret can only be used to read the public model file. So even the decrypted credentials are not sensitive at all.)
-
-* In your project in JupyterLab, open the notebook `03_check_model` and follow the instructions to check the availability and the exact location of the model. Again, don't forget to run the cells!
+* JupyterLab のプロジェクトで、ノートブック `03_check_model` を開き、指示に従ってモデルの可用性と正確な場所を確認します。繰り返しますが、セルを実行することを忘れないでください。
 
 image::check_model.png[]
 
-* Once you are finished, you can come back to these instructions.
+* 完了したら、こちらの手順に戻ることができます。
 
 image::check_model-complete.png[]
 
-== 4.2. Deploy the model in OpenShift AI
+== 4.2. OpenShift AI にモデルをデプロイ
 
-With your model available on S3 storage, it is pretty easy to serve it.
+モデルを S3 ストレージで利用できるため、提供するのは非常に簡単です。
 
-* Switch back to the OpenShift AI dashboard. If you have closed it, you can access it https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[here^] or you can reopen it from Jupyter by clicking on **File->Hub Control Panel**:
+* OpenShift AI ダッシュボードに戻ります。閉じた場合は、https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。 
 
 image::hub_panel.png[]
 
-* In the OpenShift AI dashboard, still in your Data Science Project, create a Data connection. It will serve as a reference and configuration for access to the object bucket. In the **Data connections** section, select **Add data connection**:
+* データ サイエンス プロジェクト内にある OpenShift AI ダッシュボードで、データ接続を作成します。これは、オブジェクト バケットにアクセスするための参照および設定として機能します。 **Data connections** セクションで、 **Add data connection** を選択します。
 
 image::add_data_connection.png[]
 
-* Fill in the information, the select **Add data connection**:
-    ** Name it `Coolstore`
-    ** `Access Key` is the `Access key` you got in the previous step in the notebook.
-    ** `Secret key` is the `Secret key` you got in the previous step in the notebook.
-    ** `Endpoint` is `https://s3.amazonaws.com/` (default).
-    ** `Region` is `us-east-1` (default).
-    ** `Bucket` is `rh-mad-workshop-m6`.
+* 情報を入力し、 **Add data connection** を選択します。
+    ** `Coolstore` という名前をつけます。
+    ** `Access Key` はノートブックの前の手順で取得した `Access key` です。
+    ** `Secret key` はノートブックの前の手順で取得した `Secret key` です。
+    ** `Endpoint` は `https://s3.amazonaws.com/` (default) です。
+    ** `Region` は `us-east-1` (default) です。
+    ** `Bucket` は `rh-mad-workshop-m6` です。
 
-No need to specify any connected workbench, this data connection will only be used by the model server.
+接続されたワークベンチを指定する必要はありません。このデータ接続はモデル サーバーによってのみ使用されます。
 
 image::data_connection_configuration.png[]
 
-* You now have a data connection ready to use:
+* これで、データ接続を使用できるようになりました。
 
 image::data_connection_ok.png[]
 
-* Now, on the **Models and model servers** section select **Configure server**:
+* 次に、 **Models and model servers** セクションで **Configure server** を選択します。
 
 image::add_model_server.png[]
 
-* Type *coolstore-modelserver* in the model server name. Select *OpenVINO Model Server* in Serving runtime. 
-* Leave replicas to 1, size to Small. At this point, `don't` check **Make model available via an external route**. Then select **Add**:
+* Model server name に *coolstore-modelserver* 入力し、Serving runtime で *OpenVINO Model Server* を選択します。
+* replicas は 1 のままにしておき、 size は Smallを選択します。この時点では、 **Make model available via an external route**　`チェックしない` でください。そして、 **Add**　を選択します。
 
 image::model_server_configure.png[]
 
-* We now have a model server available (but no model deployed yet). Select **Deploy model**:
+* これで、モデル サーバーが利用可能になりました (ただし、モデルはまだデプロイされていません)。 **Deploy model** を選択します。
 
 image::model_server_available.png[]
 
-* Give a name to your model, `coolstore`, select **onnx - 1** for the framework, select the Data location you created before for the Model location, and enter **coolstore-model** as the folder path for the model (without leading `/`), then select **Deploy**:
+* 
+モデルに `coolstore` という名前を付け、フレームワークとして **onnx - 1** を選択し、モデルの場所として前に作成したデータの場所を選択し、フォルダー パスとして **coolstore-model** を入力します。モデル (先頭の `/` なし) を選択し、**Deploy** を選択します。
 
 image::deploy_model_configuration.png[]
 
-* The model is now deploying. You should click on the `1` on the `Deployed models` tab to see details:
+* モデルは現在デプロイ中です。詳細を表示するには、 `Deployed models` タブの `1` をクリックする必要があります。
 
 image::deployed_models.png[]
 
-* After some time, under the **Status** column, you should see a green tick to the right of you model, indicating it's ready for use!
+* しばらくすると、 **Status** 列の下、モデルの右側に緑色のチェックマークが表示され、使用できる状態になったことを示します。
 
 image::model_ready.png[]
 
-* Once it's ready, select the **Internal Service** link under the Inference endpoint column, and make note of the grpcURL value, we will need it later. It should be `grpc://modelmesh-serving.%USERID%-data-science-project:8033`
+* 準備ができたら、 **Inference endpoint** 列の下にある `Internal Service` リンクを選択し、grpcURL 値をメモします。後で必要になります。これは`grpc://modelmesh-serving.%USERID%-data-science-project:8033` になっているはずです。
 
 image::grpcurl.png[]
 
-== 4.3. Test the model
+== 4.3. モデルのテスト
 
-Now that the model server is ready to receive requests, we can test it.
+モデル サーバーがリクエストを受信する準備ができたので、テストできます。
 
-* In your project in JupyterLab, open the notebook `04_remote_inference` and follow the instructions to see how the model can be queried.
+* JupyterLab のプロジェクトで、ノートブック `04_remote_inference` を開き、指示に従ってモデルをクエリする方法を確認します。
 
 image::remote_inference.png[]
 
-* Once you complete the notebook's instruction, you will end up with this result.
+* ノートの指示を完了すると、次の結果が得られます。
 
 image::remote_inference_complete.png[]

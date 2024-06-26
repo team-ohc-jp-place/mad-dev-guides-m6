@@ -1,9 +1,9 @@
 = 5. Building and deploying an intelligent application - 10 minutes
 :imagesdir: ../assets/images
 
-The application we are going to deploy is a simple example of how you can add an *intelligent* feature powered by AI/ML to an application. It is a webapp that you can use on your phone to discover coupons on various items you can see in a store, in an augmented reality way.
+これからデプロイするアプリケーションは、AI/ML を活用した *インテリジェントな* 機能をアプリケーションに追加する方法の簡単な例です。これは、拡張現実の方法で、店舗で見られるさまざまな商品のクーポンを見つけるために携帯電話で使用できる Web アプリです。
 
-== 5.1. Architecture
+== 5.1. アーキテクチャ
 
 ++++
 <style>
@@ -30,81 +30,81 @@ p ->> b : Post-process the inference<br/>and send back the result
 b ->> f : Pass the result to<br/>the frontend for display
 ....
 
-The different components are:
+コンポーネントは次のとおりです。
 
-* The Frontend: a https://react.dev/[React^] application, typically running on the browser of your phone,
-* The Backend: a NodeJS server, serving the application and relaying API calls,
-* The Pre-Post Processing Service: a Python https://fastapi.tiangolo.com/[FastAPI^] service, doing the image pre-processing, calling the model server API, and doing the post-processing before sending the results back.
-* The Model Server: the OpenShift AI component serving the model as an API to do the inference.
+* The Frontend: https://react.dev/[React^] アプリケーション。通常は携帯電話のブラウザ上で実行されます。
+* The Backend: NodeJS サーバー。アプリケーションを提供し、API 呼び出しを中継します。
+* The Pre-Post Processing Service: Python https://fastapi.tiangolo.com/[FastAPI^] サービス。画像の前処理を実行し、モデル サーバー API を呼び出し、結果を送り返す前に後処理を実行します。
+* The Model Server: モデルを推論を行うための API として提供する OpenShift AI コンポーネントです。
 
-NOTE: This architecture could be simplified by "merging" the Backend part and the Pre-Post Processing service. In this workshop we kept the two separated so that you can verify by yourself that the code running in the Pre-Post Processing service is the same as the one we used in the notebook in the previous section.
+NOTE: このアーキテクチャは、バックエンド部分と前後処理サービスを「マージ」することで簡素化できます。このワークショップでは、Pre-Post Processing サービスで実行されているコードが、前のセクションのノートブックで使用したコードと同じであることをご自身で確認できるように、2 つを分離しておきました。
 
-== 5.2. Deploy the application
+== 5.2. アプリケーションをデプロイ
 
-The deployment of the application is really easy, as we already created for you the necessary YAML files. They are included in the Git project we used for this workshop. You can find them **in the `deployment` folder inside you Jupyter environment**, or directly https://github.com/rh-aiservices-bu/mad_m6_workshop/tree/main/deployment[here^]. 
+必要な YAML ファイルがすでに作成されているため、アプリケーションのデプロイは非常に簡単です。これらは、このワークショップで使用した Git プロジェクトに含まれています。これらは、**Jupyter 環境内の `deployment` フォルダー**で、または直接 https://github.com/rh-aiservices-bu/mad_m6_workshop/tree/main/deployment[ここ^] で見つけることができます。
 
-Of course, you can take a few minutes to look at the code of the Frontend, Backend or the Pre-Post Processing service.
+もちろん、数分かけてフロントエンド、バックエンド、または前後処理サービスのコードを確認することもできます。
 
-To deploy the Pre-Post Processing Service service and the Application:
+Pre-Post Processing Service サービスとアプリケーションをデプロイするには、次の手順を実行します。
 
-* From your https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project[OpenShift Console^]
+* https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project[OpenShift Console^] から
 
-* Use the following credentials if you haven't logged in to the OpenShift cluster before. OpenShift is already integrated with https://access.redhat.com/products/red-hat-single-sign-on/[Red Hat Single Sign On^].
+* これまで OpenShift クラスターにログインしたことがない場合は、次の認証情報を使用します。 OpenShift はすでに https://access.redhat.com/products/red-hat-single-sign-on/[Red Hat Single Sign On^] と統合されています。
 
 image::sso_login.png[openshift_login]
 
-*  Login using your credentials:
+*  資格情報を使用してログインします。
 
 ** Username: `%USERID%`
 ** Password: `{openshift-password}`
 
-* On your project **%USERID%-data-science-project** select the "Import YAML" button, the "plus" sign on the top right:
+* プロジェクト **%USERID%-data-science-project** で、右上の「＋」記号の「YAML のインポート」ボタンを選択します。
 
 image::import_yaml.png[]
 
-- Copy/Paste the content of the file `pre_post_processor_deployment.yaml` inside the Window. If you have named your model `coolstore` as instructed, you're good to go. If not, modify the value on line 35 with the name you set. You can then select `Create`:
+- ファイル `pre_post_processor_deployment.yaml` の内容をウィンドウ内にコピー/ペーストします。指示に従ってモデルに `coolstore` という名前を付けていれば、準備完了です。そうでない場合は、35 行目の値を設定した名前に変更します。次に `作成` を選択します。
 
 image::create_inference_service.png[]
 
-- Copy/Paste the content of the file `intelligent_application_deployment.yaml` inside the Window. Nothing to change here, you can then select `Create`:
+- ファイル `intelligent_application_deployment.yaml` の内容をウィンドウ内にコピー/ペーストします。ここでは何も変更する必要はありません。 `作成` を選択します。
 
 image::create_application_deployment.png[]
 
-- Go back to https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project?view=graph[OpenShift web console^] if both deployments are successful.
+- 両方のデプロイメントが成功した場合は、https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project?view=graph[OpenShift Web console^] に戻ります。
 
 image::deployment-complete.png[]
 
-== 5.3. Use the application
+== 5.3. アプリケーションの使用
 
-The application is relatively straightforward to use. Click on the URL for the Route `ia-frontend` that was created. This URL should be: https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/[https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/^]
+このアプリケーションは比較的簡単に使用できます。作成した `ia-frontend` の RouteのURL をクリックします。この URL は次のようになります: https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/[https://ia-frontend-%USERID%-data-science-project.%SUBDOMAIN%/ ^]
 
-You have first to allow it to use your camera, this is the interface you get:
+まずカメラの使用を許可する必要があります。次のインターフェイスが表示されます。
 
 image::app_ui.png[]
 
-You have:
+以下が見えます。
 
-- The current view of your camera.
-- A button to take a picture:
+- カメラの現在のビュー
+- 写真を撮るボタン
 
 image::take_picture_button.png[]
 
-- A button to switch from front to rear camera if you are using a phone:
+- 電話を使用している場合に前面カメラから背面カメラに切り替えるボタン
 
 image::switch_camera_button.png[]
 
-- A QR code that you can use to quickly open the application **on a phone** (much easier than typing the URL!):
+- **携帯電話** でアプリケーションをすばやく開くために使用できる QR コード (URL を入力するよりもはるかに簡単です!):
 
 image::qr_code_example.png[]
 
-When you take a picture, it will be sent to the inference service, and you will see which items have been detected, and if there is a promotion available!
+写真を撮ると推論サービスに送信され、どのアイテムが検出されたか、利用可能なプロモーションがあるかどうかがわかります。
 
-== 5.4. Tweak the application
+== 5.4. アプリケーションの微調整
 
-There are two parameters you can change on this application:
+このアプリケーションで変更できるパラメータは 2 つあります。
 
-- On the `ia-frontend` Deployment, you can modify the `DISPLAY_BOX` environment variable from `true` to `false`. It will hide the bounding box and the inference score, so that you get only the coupon *flying* over the item.
-- On the `ia-inference` Deployment, the one used for pre-post processing, you can modify the `COUPON_VALUE` environment variable. The format is simply an Array with the value of the coupon for the 3 classes: bottle, hat, shirt. As you see, these values could be adjusted in real time, and this could even be based on another ML model! But this would be a subject for another workshop.
+- `ia-frontend` デプロイメントでは、 `DISPLAY_BOX` 環境変数を `true` から `false` に変更できます。境界ボックスと推論スコアが非表示になるため、項目の上を *飛んでいる* クーポンだけが得られます。
+- 前後処理に使用される `ia-inference` デプロイメントでは、 `COUPON_VALUE` 環境変数を変更できます。形式は、ボトル、帽子、シャツの 3 つのクラスのクーポンの値を含む単純な配列です。ご覧のとおり、これらの値はリアルタイムで調整でき、別の ML モデルに基づくこともできます。しかし、これは別のワークショップのテーマになります。
 
 
 
