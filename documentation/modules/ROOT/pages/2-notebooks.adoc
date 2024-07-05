@@ -23,7 +23,7 @@ image::standard_data_science.png[]
 
 image::deployment_size.png[]
 
-* 必要に応じて、環境内で利用可能な GPU がある場合、割り当てられる GPU の数を選択できます (この場合は *0* なので、何も必要ありません)。
+* 必要に応じて、環境内で利用可能な NVIDIAGPU がある場合、割り当てられる GPU の数を選択できます。
 
 image::gpu.png[]
 
