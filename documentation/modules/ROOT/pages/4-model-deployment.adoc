@@ -1,4 +1,4 @@
-= 4. Deploying a model - 15 minutes
+= 4. モデルのデプロイ - 15 minutes
 :imagesdir: ../assets/images
 
 モデルのトレーニング方法とその使用方法の概要を説明した後、OpenShift AI を使用してモデルを提供する方法を見ていきます。これにより、後でインテリジェント アプリケーションで使用しやすくなります。
