@@ -9,11 +9,11 @@ image::close_sandbox.png[]
 
 ワークショップの残りの部分ではデータ サイエンス プロジェクトを使用するため、Jupyter ノートブック環境とポッドもシャットダウンする必要があります。
 
-* ブラウザーで OpenShift AI ダッシュボード タブを開いている場合は、そこにアクセスしてください。その後、単純に JupyterLab タブを閉じ、ダッシュボードで **Stop notebook server** を選択します。
+* ブラウザで OpenShift AI ダッシュボード を開いている場合は、単純に JupyterLab タブを閉じ、ダッシュボードで **Stop notebook server** を選択します。
 
 image::stop_notebook_server.png[]
 
-* OpenShift AI ダッシュボードを閉じた場合は、 https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。
+* OpenShift AI ダッシュボードを閉じている場合は、 https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。
 
 image::hub_panel.png[]
 
