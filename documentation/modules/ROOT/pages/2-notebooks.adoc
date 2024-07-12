@@ -50,7 +50,7 @@ image::open_new_tab.png[]
 
 image::authorize.png[]
 
-* Congratulations, you just launched your Jupyter Lab environment!
+* おめでとうございます、あなたはJupyter Labの環境を起動できました！
 
 image::jupyterlab.png[]
 
