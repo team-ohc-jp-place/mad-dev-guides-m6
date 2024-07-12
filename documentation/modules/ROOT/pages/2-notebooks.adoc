@@ -43,7 +43,7 @@ image::start.png[]
 
 image::open_new_tab.png[]
 
-* 再度ログインする必要があり、初めて環境にアクセスするときに、さまざまな情報へのアクセスを承認します。
+* 再度ログインする必要があり、初めて環境にアクセスするときには、さまざまな情報へのアクセスの承認が必要になります。
 
  * *Username*: `%USERID%`
  * *Password*: `{openshift-password}`
