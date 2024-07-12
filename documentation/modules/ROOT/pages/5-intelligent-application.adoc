@@ -70,7 +70,7 @@ image::create_inference_service.png[]
 
 image::create_application_deployment.png[]
 
-- 両方のデプロイメントが成功した場合は、 https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project?view=graph[OpenShift Web console^] に戻ります。
+- すべてのデプロイメントが成功したら https://console-openshift-console.%SUBDOMAIN%/k8s/cluster/projects/%USERID%-data-science-project?view=graph[OpenShift Web console^] に戻ります。
 
 image::deployment-complete.png[]
 
