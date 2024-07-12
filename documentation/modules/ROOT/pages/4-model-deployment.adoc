@@ -39,7 +39,7 @@ image::check_model-complete.png[]
 
 == 4.2. OpenShift AI にモデルをデプロイ
 
-モデルを S3 ストレージで利用できるため、提供するのは非常に簡単です。
+S3ストレージにあるモデルにアクセスできればデプロイするのは非常に簡単です。
 
 * OpenShift AI ダッシュボードに戻ります。閉じた場合は、 https://rhods-dashboard-redhat-ods-applications.%SUBDOMAIN%[ここ^] にアクセスするか、 **File->Hub Control Panel** をクリックして Jupyter から再度開くことができます。 
 
