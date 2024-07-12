@@ -1,4 +1,4 @@
-= 5. Building and deploying an intelligent application - 10 minutes
+= 5. インテリジェントなアプリケーションのデプロイ - 10 minutes
 :imagesdir: ../assets/images
 
 これからデプロイするアプリケーションは、AI/ML を活用した *インテリジェントな* 機能をアプリケーションに追加する方法の簡単な例です。これは、拡張現実の方法で、店舗で見られるさまざまな商品のクーポンを見つけるために携帯電話で使用できる Web アプリです。
