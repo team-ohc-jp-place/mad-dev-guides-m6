@@ -3,4 +3,4 @@
 * xref:3-model-training.adoc[モデルのトレーニング]
 * xref:4-model-deployment.adoc[モデルのデプロイ]
 * xref:5-intelligent-application.adoc[インテリジェントなアプリケーションのデプロイ]
-* xref:6-conclusion.adoc[Conclusion]
+* xref:6-conclusion.adoc[まとめ]
