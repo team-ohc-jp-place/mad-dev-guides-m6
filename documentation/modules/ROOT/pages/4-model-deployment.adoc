@@ -70,7 +70,7 @@ image::data_connection_ok.png[]
 image::add_model_server.png[]
 
 * Model server name に *coolstore-modelserver* 入力し、Serving runtime で *OpenVINO Model Server* を選択します。
-* replicas は 1 のままにしておき、 size は Smallを選択します。この時点では、 **Make model available via an external route**　`チェックしない` でください。そして、 **Add**　を選択します。
+* replicas は 1 のままにしておき、 size は Smallを選択します。この時点では、 **Make model available via an external route** の `チェックをしない` でください。そして、 **Add**　を選択します。
 
 image::model_server_configure.png[]
 
