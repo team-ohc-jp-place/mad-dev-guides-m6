@@ -1,4 +1,4 @@
-= 6. Conclusion
+= 6. まとめ
 :imagesdir: ../assets/images
 
 このワークショップを楽しんでいただければ幸いです。
