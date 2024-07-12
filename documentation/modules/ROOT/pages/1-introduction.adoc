@@ -1,4 +1,4 @@
-= 1. Red Hat OpenShift AI Introduction - 10 minutes
+= 1. Red Hat OpenShift AI の概要 - 10 minutes
 :imagesdir: ../assets/images
 
 == 1.1 Red Hat OpenShift AI とは?
