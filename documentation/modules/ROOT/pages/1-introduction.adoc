@@ -1,3 +1,5 @@
+= これはアーカイブのために残されているコンテンツです。2024年7月以降はocp-4.15-jpブランチのコンテンツを使用してください。
+
 = 1. Red Hat OpenShift AI Introduction - 10 minutes
 :imagesdir: ../assets/images
 
